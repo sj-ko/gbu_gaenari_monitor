@@ -105,7 +105,7 @@ namespace GBU_Server_Monitor
                     i = ch;
                 }
 
-                string path = @"C:\anprtest\ch" + i;
+                string path = @"D:\anprtest\ch" + i;
                 if (File.Exists(path + "\\anprresult.txt"))
                 {
                     string[] lines = System.IO.File.ReadAllLines(path + "\\anprresult.txt");
@@ -137,7 +137,7 @@ namespace GBU_Server_Monitor
 
         public void InsertPlateText(int camid, DateTime datetime, string plate, Image image)
         {
-            string path = @"C:\anprtest\ch" + camid;
+            string path = @"D:\anprtest\ch" + camid;
             string logFileName = "\\anprresult.txt";
             string dtStr = String.Format("{0:yyyyMMdd_HHmmss}", datetime);
             string imageFileName = "\\Camera" + camid + "_" + plate + "_" + dtStr + ".jpg";

@@ -13,7 +13,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using gx;
 using cm;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GBU_Server_Monitor
@@ -23,7 +22,8 @@ namespace GBU_Server_Monitor
         private System.Threading.Timer timer;
         private AutoResetEvent timerEvent;
 
-        FileSystemWatcher[] watcher = new FileSystemWatcher[20];
+        private FileSystemWatcher[] watcher = new FileSystemWatcher[20];
+        private bool monitorStatus = false;
 
         public struct PLATE_FOUND
         {
@@ -51,7 +51,13 @@ namespace GBU_Server_Monitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            listView_result.View = View.Details;
+            listView_result.FullRowSelect = true;
+            listView_result.GridLines = true;
 
+            listView_result.Columns.Add("카메라", 50, HorizontalAlignment.Left);
+            listView_result.Columns.Add("시간", 100, HorizontalAlignment.Left);
+            listView_result.Columns.Add("차량번호", 100, HorizontalAlignment.Left);
         }
 
         private void Btn_Disconnect_Click(object sender, EventArgs e)
@@ -61,10 +67,12 @@ namespace GBU_Server_Monitor
 
         private void Stop()
         {
-
-            timer.Change(Timeout.Infinite, Timeout.Infinite); // stop timer
-            timer.Dispose();
-            timer = null;
+            if (timer != null)
+            {
+                timer.Change(Timeout.Infinite, Timeout.Infinite); // stop timer
+                timer.Dispose();
+                timer = null;
+            }
 
             for (int i = 0; i < 20; i++)
             {
@@ -93,55 +101,6 @@ namespace GBU_Server_Monitor
             return result;
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("GBU ANPR Monitor " + Application.ProductVersion + "\n" + "For Gaenari Gas Station"
-                + "\n\n" + "(C) 2015 GBU Datalinks Co. Ltd.");
-        }
-
-        private void searchPlateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SearchWindow searchWindow = new SearchWindow();
-            searchWindow.Owner = this;
-            searchWindow.Init();
-            searchWindow.Show();
-        }
-
-        private void anprResultThumbnail_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            timerEvent = new AutoResetEvent(true);
-            timer = new System.Threading.Timer(MediaTimerCallBack, null, 100, 200);
-
-
-            for (int i = 0; i < 20; i++)
-            {
-                watcher[i] = new FileSystemWatcher();
-                string path = @"C:\anprtest\ch" + i;
-                if (Directory.Exists(path))
-                {
-                    watcher[i].Path = path;
-                    watcher[i].NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-                    watcher[i].Filter = "anprresult.txt";
-                    watcher[i].Changed += new FileSystemEventHandler(OnChangedANPRPath);
-                    watcher[i].EnableRaisingEvents = true;
-                }
-            }
-
-            connectToolStripMenuItem.Enabled = false;
-            disconnectToolStripMenuItem.Enabled = true;
-        }
-
         private void OnChangedANPRPath(object source, FileSystemEventArgs e)
         {
             //System.Diagnostics.Debug.WriteLine(e.FullPath + " changed");
@@ -159,6 +118,11 @@ namespace GBU_Server_Monitor
                     {
                         pictureBoxes[Convert.ToInt32(logresults[0], 10)].ImageLocation = logresults[3];
                         textBoxes[Convert.ToInt32(logresults[0], 10)].Text = logresults[1];
+
+                        DateTime time = new DateTime();
+                        string[] itemStr = { logresults[0], logresults[2], logresults[1] };
+                        ListViewItem item = new ListViewItem(itemStr);
+                        listView_result.Items.Add(item);
                     }
                 ));
 
@@ -170,12 +134,80 @@ namespace GBU_Server_Monitor
 
         }
 
-        private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        private void button_PlayStop_Click(object sender, EventArgs e)
+        {
+            if (monitorStatus == true)
+            {
+                Stop();
+
+                button_PlayStop.Text = "연결";
+
+                monitorStatus = false;
+            }
+            else
+            {
+                timerEvent = new AutoResetEvent(true);
+                timer = new System.Threading.Timer(MediaTimerCallBack, null, 100, 200);
+
+
+                for (int i = 0; i < 20; i++)
+                {
+                    watcher[i] = new FileSystemWatcher();
+                    string path = @"D:\anprtest\ch" + i;
+                    if (Directory.Exists(path))
+                    {
+                        watcher[i].Path = path;
+                        watcher[i].NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                        watcher[i].Filter = "anprresult.txt";
+                        watcher[i].Changed += new FileSystemEventHandler(OnChangedANPRPath);
+                        watcher[i].EnableRaisingEvents = true;
+                    }
+                }
+
+                button_PlayStop.Text = "끊기";
+
+                monitorStatus = true;
+            }
+        }
+
+        private void button_Search_Click(object sender, EventArgs e)
+        {
+            SearchWindow searchWindow = new SearchWindow();
+            searchWindow.Owner = this;
+            searchWindow.Init();
+            searchWindow.Show();
+        }
+
+        private void button_About_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("GBU ANPR Monitor " + Application.ProductVersion + "\n" + "For Gaenari Gas Station"
+                + "\n\n" + "(C) 2015 GBU Datalinks Co. Ltd.");
+        }
+
+        private void button_Exit_Click(object sender, EventArgs e)
         {
             Stop();
+            Application.Exit();
+        }
 
-            connectToolStripMenuItem.Enabled = true;
-            disconnectToolStripMenuItem.Enabled = false;
+        private void button_SwitchMonitor_Click(object sender, EventArgs e)
+        {
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen myScreen = Screen.FromControl(this);
+                Screen otherScreen = Screen.AllScreens.FirstOrDefault(s => !s.Equals(myScreen)) ?? myScreen;
+
+                this.StartPosition = FormStartPosition.Manual;
+
+                Point p = new Point();
+
+                p.X = otherScreen.WorkingArea.Left;
+                p.Y = otherScreen.WorkingArea.Top;
+
+                this.Location = p;
+            }
+
         }
 
     }

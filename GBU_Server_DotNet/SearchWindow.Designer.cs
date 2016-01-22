@@ -57,6 +57,7 @@
             this.search_textBox_search.Size = new System.Drawing.Size(145, 21);
             this.search_textBox_search.TabIndex = 1;
             this.search_textBox_search.TextChanged += new System.EventHandler(this.search_textBox_search_TextChanged);
+            this.search_textBox_search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.search_textBox_search_KeyDown);
             // 
             // Search_listView1
             // 
