@@ -123,6 +123,7 @@ namespace GBU_Server_Monitor
                         string[] itemStr = { logresults[0], logresults[2], logresults[1] };
                         ListViewItem item = new ListViewItem(itemStr);
                         listView_result.Items.Add(item);
+                        listView_result.Items[listView_result.Items.Count - 1].EnsureVisible();
                     }
                 ));
 

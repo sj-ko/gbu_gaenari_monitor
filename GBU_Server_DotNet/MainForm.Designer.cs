@@ -523,6 +523,7 @@
             // 
             this.listView_result.Location = new System.Drawing.Point(1642, 70);
             this.listView_result.Name = "listView_result";
+            this.listView_result.ShowItemToolTips = true;
             this.listView_result.Size = new System.Drawing.Size(266, 800);
             this.listView_result.TabIndex = 51;
             this.listView_result.UseCompatibleStateImageBehavior = false;
