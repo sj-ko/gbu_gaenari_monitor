@@ -13,7 +13,7 @@ namespace GBU_Server_Monitor
 {
     public partial class SearchWindow : Form
     {
-        private Database dbManager = new Database();
+        private Database dbManager;
 
         public struct PLATE_FOUND
         {
@@ -46,6 +46,8 @@ namespace GBU_Server_Monitor
             Search_listView1.Columns.Add("차량번호", 100, HorizontalAlignment.Left);
 
             comboBox_Channel.SelectedIndex = 0;
+
+            dbManager = form.dbManager;
         }
 
         private void Search_button_OK_Click(object sender, EventArgs e)
@@ -57,13 +59,25 @@ namespace GBU_Server_Monitor
         {
             DataTable result = new DataTable();
 
+            DataTable DBresult = new DataTable();
+
             _plateList.Clear();
             _plateListIdx = 0;
 
             Search_listView1.Items.Clear();
-            //dbManager.SearchPlate(search_textBox_search.Text, ref result);
+            
+            // result from DB
+            dbManager.SearchPlate(search_textBox_search.Text, ref DBresult);
+            // result from local file
             dbManager.SearchPlateForFile(comboBox_Channel.SelectedIndex - 1 ,search_textBox_search.Text, ref result);
 
+            // read DB result
+            foreach (DataRow dr in DBresult.Rows)
+            {
+                Console.WriteLine(Convert.ToString(dr["CARL_YMDHNS"]) + " , " + Convert.ToString(dr["CARL_CARNO"]).ToString() + " , " + Convert.ToString(dr["CARL_OK"]) + " , " + Convert.ToString(dr["CARL_CID"]));
+            }
+
+            // read local file result and add list
             foreach (DataRow dr in result.Rows)
             {
                 string[] itemStr = { Convert.ToString(dr["camId"]), Convert.ToDateTime(dr["dateTime"]).ToString(), Convert.ToString(dr["plate"]) };

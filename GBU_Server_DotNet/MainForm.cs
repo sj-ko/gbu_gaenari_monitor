@@ -19,6 +19,8 @@ namespace GBU_Server_Monitor
 {
     public partial class MainForm : Form
     {
+        public Camera camera;
+
         private System.Threading.Timer timer;
         private AutoResetEvent timerEvent;
 
@@ -37,7 +39,9 @@ namespace GBU_Server_Monitor
         private List<PLATE_FOUND> _plateList = new List<PLATE_FOUND>();
         private int _plateListIdx = 0;
 
-        private Database dbManager = new Database();
+        public Database dbManager = new Database();
+
+        //public string savepath = @"D:\anprtest";
 
         public MainForm()
         {
@@ -58,11 +62,28 @@ namespace GBU_Server_Monitor
             listView_result.Columns.Add("카메라", 50, HorizontalAlignment.Left);
             listView_result.Columns.Add("시간", 100, HorizontalAlignment.Left);
             listView_result.Columns.Add("차량번호", 100, HorizontalAlignment.Left);
+
+            InitCamera();
+
+            dbManager.SavePath = camera.savePath;
         }
 
         private void Btn_Disconnect_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void InitCamera()
+        {
+            camera = new Camera();
+            camera.PropertyChanged += camera_PropertyChanged;
+        }
+
+        private void camera_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //UpdateFormUIValue();
+
+            dbManager.SavePath = camera.savePath;
         }
 
         private void Stop()
@@ -155,7 +176,7 @@ namespace GBU_Server_Monitor
                 for (int i = 0; i < 20; i++)
                 {
                     watcher[i] = new FileSystemWatcher();
-                    string path = @"D:\anprtest\ch" + i;
+                    string path = camera.savePath + "\\ch" + i;
                     if (Directory.Exists(path))
                     {
                         watcher[i].Path = path;
@@ -209,6 +230,14 @@ namespace GBU_Server_Monitor
                 this.Location = p;
             }
 
+        }
+
+        private void button_Configure_Click(object sender, EventArgs e)
+        {
+            ConfigureWindow configureWindow = new ConfigureWindow();
+            configureWindow.Owner = this;
+            configureWindow.Init();
+            configureWindow.ShowDialog();
         }
 
     }

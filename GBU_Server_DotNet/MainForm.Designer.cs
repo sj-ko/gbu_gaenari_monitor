@@ -95,6 +95,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.button_SwitchMonitor = new System.Windows.Forms.Button();
+            this.button_Configure = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -727,11 +728,22 @@
             this.button_SwitchMonitor.UseVisualStyleBackColor = true;
             this.button_SwitchMonitor.Click += new System.EventHandler(this.button_SwitchMonitor_Click);
             // 
+            // button_Configure
+            // 
+            this.button_Configure.Location = new System.Drawing.Point(289, 12);
+            this.button_Configure.Name = "button_Configure";
+            this.button_Configure.Size = new System.Drawing.Size(75, 36);
+            this.button_Configure.TabIndex = 74;
+            this.button_Configure.Text = "설정";
+            this.button_Configure.UseVisualStyleBackColor = true;
+            this.button_Configure.Click += new System.EventHandler(this.button_Configure_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.button_Configure);
             this.Controls.Add(this.button_SwitchMonitor);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
@@ -900,6 +912,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button_SwitchMonitor;
+        private System.Windows.Forms.Button button_Configure;
     }
 }
 

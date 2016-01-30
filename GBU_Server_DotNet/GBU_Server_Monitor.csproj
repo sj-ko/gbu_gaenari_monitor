@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{63F8FFFA-B799-4639-A85C-C8882CE58337}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GBU_Server_Monitor</RootNamespace>
     <AssemblyName>GBU_Server_Monitor</AssemblyName>
@@ -96,6 +96,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="cmanprdotnet8, Version=7.2.6.4, Culture=neutral, PublicKeyToken=70d355eafe3ed54c, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -131,7 +134,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="FileClient.cs" />
+    <Compile Include="ConfigureWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigureWindow.Designer.cs">
+      <DependentUpon>ConfigureWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +158,9 @@
     <Compile Include="SearchWindow.Designer.cs">
       <DependentUpon>SearchWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ConfigureWindow.resx">
+      <DependentUpon>ConfigureWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
