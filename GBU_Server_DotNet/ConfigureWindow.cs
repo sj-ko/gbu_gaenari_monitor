@@ -21,12 +21,18 @@ namespace GBU_Server_Monitor
         {
             MainForm form = (MainForm)this.Owner;
             Configure_textbox_savepath.Text = form.camera.savePath;
+            Configure_textbox_serverPath.Text = form.camera.serverPath;
+            Configure_textbox_configPath.Text = form.camera.configPath;
+            Configure_combobox_nChannel.SelectedIndex = form.camera.nChannel - 1;
         }
 
         private void button_OK_Click(object sender, EventArgs e)
         {
             MainForm form = (MainForm)this.Owner;
             form.camera.savePath = Configure_textbox_savepath.Text;
+            form.camera.serverPath = Configure_textbox_serverPath.Text;
+            form.camera.configPath = Configure_textbox_configPath.Text;
+            form.camera.nChannel = Configure_combobox_nChannel.SelectedIndex + 1;
             this.Close();
         }
 

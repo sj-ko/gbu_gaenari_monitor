@@ -26,6 +26,7 @@ namespace GBU_Server_Monitor
 
         private FileSystemWatcher[] watcher = new FileSystemWatcher[20];
         private bool monitorStatus = false;
+        private bool playStatus = false;
 
         public struct PLATE_FOUND
         {
@@ -238,6 +239,27 @@ namespace GBU_Server_Monitor
             configureWindow.Owner = this;
             configureWindow.Init();
             configureWindow.ShowDialog();
+        }
+
+        private void button_PlayAll_Click(object sender, EventArgs e)
+        {
+            if (playStatus == true)
+            {
+                System.Diagnostics.Process.Start(@"taskkill", @"/f /im GBU_Server_DotNet*");
+
+                button_PlayAll.Text = "전체시작";
+                playStatus = false;
+            }
+            else
+            {
+                for (int i = 0; i < camera.nChannel; i++)
+                {
+                    System.Diagnostics.Process.Start(camera.serverPath + @"\GBU_Server_DotNet.exe", camera.configPath + @"\ch" + i + ".cfg --autostart");
+                }
+
+                button_PlayAll.Text = "정지";
+                playStatus = true;
+            }
         }
 
     }

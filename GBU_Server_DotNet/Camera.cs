@@ -19,6 +19,11 @@ namespace GBU_Server_Monitor
 
         private string _savePath;
 
+        private string _serverPath;
+        private string _configPath;
+
+        private int _nChannel;
+
         public int camID
         {
             get
@@ -130,6 +135,54 @@ namespace GBU_Server_Monitor
             }
         }
 
+        public string serverPath
+        {
+            get
+            {
+                return _serverPath;
+            }
+            set
+            {
+                if (value != _serverPath)
+                {
+                    _serverPath = value;
+                    NotifyPropertyChanged("serverPath");
+                }
+            }
+        }
+
+        public string configPath
+        {
+            get
+            {
+                return _configPath;
+            }
+            set
+            {
+                if (value != _configPath)
+                {
+                    _configPath = value;
+                    NotifyPropertyChanged("configPath");
+                }
+            }
+        }
+
+        public int nChannel
+        {
+            get
+            {
+                return _nChannel;
+            }
+            set
+            {
+                if (value != _nChannel)
+                {
+                    _nChannel = value;
+                    NotifyPropertyChanged("nChannel");
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         // This method is called by the Set accessor of each property.
@@ -154,6 +207,11 @@ namespace GBU_Server_Monitor
             _cropWidth = 320;
             _cropHeight = 180;
             _savePath = @"D:\anprtest";
+
+            _serverPath = @"C:\gbu\server_160223\";
+            _configPath = @"C:\gbu\cfg_160223\";
+
+            _nChannel = 13;
         }
 
         public Camera(int id)
@@ -167,6 +225,11 @@ namespace GBU_Server_Monitor
             _cropWidth = 320;
             _cropHeight = 180;
             _savePath = @"D:\anprtest";
+
+            _serverPath = @"C:\gbu\server_160223\";
+            _configPath = @"C:\gbu\cfg_160223\";
+
+            _nChannel = 13;
         }
 
         public Camera(int id, string url)
@@ -179,6 +242,11 @@ namespace GBU_Server_Monitor
             _cropWidth = 320;
             _cropHeight = 180;
             _savePath = @"D:\anprtest";
+
+            _serverPath = @"C:\gbu\server_160223\";
+            _configPath = @"C:\gbu\cfg_160223\";
+
+            _nChannel = 13;
         }
 
     }

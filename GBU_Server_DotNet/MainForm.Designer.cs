@@ -96,6 +96,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.button_SwitchMonitor = new System.Windows.Forms.Button();
             this.button_Configure = new System.Windows.Forms.Button();
+            this.button_PlayAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -532,7 +533,7 @@
             // pictureBox21
             // 
             this.pictureBox21.ImageLocation = "gbudatalinks_logo.png";
-            this.pictureBox21.Location = new System.Drawing.Point(13, 972);
+            this.pictureBox21.Location = new System.Drawing.Point(12, 924);
             this.pictureBox21.Name = "pictureBox21";
             this.pictureBox21.Size = new System.Drawing.Size(123, 96);
             this.pictureBox21.TabIndex = 52;
@@ -738,11 +739,22 @@
             this.button_Configure.UseVisualStyleBackColor = true;
             this.button_Configure.Click += new System.EventHandler(this.button_Configure_Click);
             // 
+            // button_PlayAll
+            // 
+            this.button_PlayAll.Location = new System.Drawing.Point(393, 12);
+            this.button_PlayAll.Name = "button_PlayAll";
+            this.button_PlayAll.Size = new System.Drawing.Size(82, 36);
+            this.button_PlayAll.TabIndex = 75;
+            this.button_PlayAll.Text = "전체시작";
+            this.button_PlayAll.UseVisualStyleBackColor = true;
+            this.button_PlayAll.Click += new System.EventHandler(this.button_PlayAll_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.ClientSize = new System.Drawing.Size(1920, 1040);
+            this.Controls.Add(this.button_PlayAll);
             this.Controls.Add(this.button_Configure);
             this.Controls.Add(this.button_SwitchMonitor);
             this.Controls.Add(this.label20);
@@ -815,6 +827,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "GBU ANPR Monitor";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -913,6 +926,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button_SwitchMonitor;
         private System.Windows.Forms.Button button_Configure;
+        private System.Windows.Forms.Button button_PlayAll;
     }
 }
 
