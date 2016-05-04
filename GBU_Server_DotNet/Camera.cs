@@ -208,8 +208,8 @@ namespace GBU_Server_Monitor
             _cropHeight = 180;
             _savePath = @"D:\anprtest";
 
-            _serverPath = @"C:\gbu\server_160223\";
-            _configPath = @"C:\gbu\cfg_160223\";
+            _serverPath = @"C:\gbu\server_160504\";
+            _configPath = @"C:\gbu\cfg_160504\";
 
             _nChannel = 13;
         }
@@ -226,8 +226,8 @@ namespace GBU_Server_Monitor
             _cropHeight = 180;
             _savePath = @"D:\anprtest";
 
-            _serverPath = @"C:\gbu\server_160223\";
-            _configPath = @"C:\gbu\cfg_160223\";
+            _serverPath = @"C:\gbu\server_160504\";
+            _configPath = @"C:\gbu\cfg_160504\";
 
             _nChannel = 13;
         }
@@ -243,8 +243,8 @@ namespace GBU_Server_Monitor
             _cropHeight = 180;
             _savePath = @"D:\anprtest";
 
-            _serverPath = @"C:\gbu\server_160223\";
-            _configPath = @"C:\gbu\cfg_160223\";
+            _serverPath = @"C:\gbu\server_160504\";
+            _configPath = @"C:\gbu\cfg_160504\";
 
             _nChannel = 13;
         }
